@@ -21,8 +21,8 @@
 
 // Have to set up handlers for various touch events. Can't rely on UIButton.highlighted and enabled property because highlighted is still YES when touch up.
 - (void)setupStateChangeHandlers {
-	[self addTarget:self action:@selector(buttonUp:event:) forControlEvents:(UIControlEventTouchUpOutside|UIControlEventTouchUpInside|UIControlEventTouchCancel|UIControlEventTouchDragExit)];
-	[self addTarget:self action:@selector(buttonDown:event:) forControlEvents:UIControlEventTouchDown|UIControlEventTouchDragEnter];
+	[self addTarget:self action:@selector(buttonUp) forControlEvents:(UIControlEventTouchUpOutside|UIControlEventTouchUpInside|UIControlEventTouchCancel|UIControlEventTouchDragExit)];
+	[self addTarget:self action:@selector(buttonDown) forControlEvents:UIControlEventTouchDown|UIControlEventTouchDragEnter];
 }
 
 
@@ -36,6 +36,7 @@
 
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
 	[self setupStateChangeHandlers];
 }
 
@@ -68,12 +69,12 @@
 
 #pragma mark Events
 
-- (void)buttonUp:(id)aButton event:(id)event {
+- (void)buttonUp {
 	self.layer.backgroundColor = self.normalBackgroundColor.CGColor;
 }
 
 
-- (void)buttonDown:(id)aButton event:(id)event {
+- (void)buttonDown {
 	self.layer.backgroundColor = self.highlightedBackgroundColor.CGColor;
 }
 

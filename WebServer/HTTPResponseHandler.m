@@ -100,6 +100,11 @@ static NSMutableArray *registeredHandlers = nil;
 	url:(NSURL *)requestURL
 	headerFields:(NSDictionary *)requestHeaderFields
 {
+    if (aRequest != nil) {}
+    if (requestMethod != nil) {}
+    if (requestURL != nil) {}
+    if (requestHeaderFields != nil) {}
+    
 	return YES;
 }
 

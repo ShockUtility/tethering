@@ -43,6 +43,7 @@
 //
 // returns YES (if the handler can handle the request), NO (otherwise)
 //
+/*
 + (BOOL)canHandleRequest:(CFHTTPMessageRef)aRequest
                   method:(NSString *)requestMethod
                      url:(NSURL *)requestURL
@@ -50,7 +51,7 @@
 {
     return YES;
 }
-
+*/
 //
 // startResponse
 //

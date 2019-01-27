@@ -561,7 +561,7 @@ static void AcceptCallback(CFSocketRef s, CFSocketCallBackType type, CFDataRef a
 
 - (void)applicationDidEnterForeground:(NSNotification *)n
 {
-	LOG_NETWORK_SOCKS(NSLOGGER_LEVEL_DEBUG, @"refreshing ip address");
+    LOG_NETWORK_SOCKS(NSLOGGER_LEVEL_DEBUG, @"refreshing ip address : %@", n.description);
 	
 	// refresh the IP address, just in case
 	self.currentAddress = [UIDevice localWiFiIPAddress];
@@ -595,15 +595,9 @@ static void AcceptCallback(CFSocketRef s, CFSocketCallBackType type, CFDataRef a
 }
 
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    self.startOrStopButton = nil;
-}
-
-
 - (void)dealloc
 {
+    self.startOrStopButton = nil;
     [self _stopServer:nil];
 }
 
@@ -626,8 +620,9 @@ static void AcceptCallback(CFSocketRef s, CFSocketCallBackType type, CFDataRef a
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:URLString]];
     }
 }
-
+/*
 #pragma mark - SFSafariViewController delegate methods
+
 -(void)safariViewController:(SFSafariViewController *)controller didCompleteInitialLoad:(BOOL)didLoadSuccessfully {
     // Load finished
 }
@@ -641,13 +636,9 @@ static void AcceptCallback(CFSocketRef s, CFSocketCallBackType type, CFDataRef a
 - (NSString *)tableView:(UITableView *)table titleForHeaderInSection:(NSInteger)section
 {
 #pragma unused(table)
-    /*
-     if (section == SocksProxyTableSectionConnections)
-     return @"Connections";
-     */
     return nil;
 }
-
+*/
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)table
 {
 #pragma unused(table)

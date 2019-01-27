@@ -64,7 +64,7 @@ DNSServer::DNSServer()
 
     this->remoteDNSIP = new char[MAX_IPV4_ADDR_LENGTH];
     memset(this->remoteDNSIP, 0, MAX_IPV4_ADDR_LENGTH);
-    strcpy(this->remoteDNSIP, DEFAULT_DNS_IP),
+    strcpy(this->remoteDNSIP, DEFAULT_DNS_IP);
     this->remoteDNSPort = DEFAULT_DNS_PORT;
 
     this->localDNSIP = new char[MAX_IPV4_ADDR_LENGTH];
@@ -412,7 +412,7 @@ int DNSServer::peer_socks5_rcv_auth_process(struct peer_t *p)
     int ret;
     char buff[100];
     memset(buff,0,100);
-    while ((ret = read(p->tcp_fd, buff, sizeof(buff))) < 0 && errno == EAGAIN);
+    while ((ret = int(read(p->tcp_fd, buff, sizeof(buff)))) < 0 && errno == EAGAIN);
 
     if(ret == 0){
         peer_mark_as_dead(p);
@@ -497,7 +497,7 @@ int DNSServer::peer_socks5_rcv_cmd_process(struct peer_t *p)
     int ret;
     char buff[1024];
     memset(buff,0,1024);
-    while ((ret = read(p->tcp_fd, buff, sizeof(buff))) < 0 && errno == EAGAIN);
+    while ((ret = int(read(p->tcp_fd, buff, sizeof(buff)))) < 0 && errno == EAGAIN);
 
     if(ret == 0){
         peer_mark_as_dead(p);
@@ -628,7 +628,7 @@ int DNSServer::peer_readres(struct peer_t *p)
         we fall into the `processanswer` code below without having the
         whole answer. */
     /* This is reading data from Tor over TCP */
-    while ((ret = read(p->tcp_fd, (p->b + p->bl), (RECV_BUF_SIZE - p->bl))) < 0 && errno == EAGAIN);
+    while ((ret = int(read(p->tcp_fd, (p->b + p->bl), (RECV_BUF_SIZE - p->bl)))) < 0 && errno == EAGAIN);
 
     if (ret == 0) {
         print_level(NSLOGGER_LEVEL_INFO, "Nothing can be read from remote DNS.\n");
@@ -731,7 +731,7 @@ struct in_addr DNSServer::socks5_proxy_select(void)
 
     if(inet_pton(AF_INET, remoteSocksIP, &ns)){
 
-        socks5_proxy.s_addr = ns;
+        socks5_proxy.s_addr = in_addr_t(ns);
 
         return socks5_proxy;
     }else{
@@ -1026,8 +1026,8 @@ int DNSServer::_start_server()
             memset((char*)dns_request, 0, sizeof(struct request_t)); // bzero
             dns_request->al = sizeof(struct sockaddr_in);
 
-            dns_request->bl = recvfrom(udp_fd, dns_request->b+2, RECV_BUF_SIZE-2, 0,
-                              (struct sockaddr*)&(dns_request->a), &(dns_request->al));
+            dns_request->bl = int(recvfrom(udp_fd, dns_request->b+2, RECV_BUF_SIZE-2, 0,
+                              (struct sockaddr*)&(dns_request->a), &(dns_request->al)));
             
             print_level(NSLOGGER_LEVEL_DEBUG, "DNS UDP connection poll event.\n");
             
@@ -1058,7 +1058,7 @@ int DNSServer::_nonblocking_send(int fd, void* buff, int len)
 
     while(nByteToWrite > 0){
 
-        nByteWritten = write(fd, topPtr, nByteToWrite);
+        nByteWritten = int(write(fd, topPtr, size_t(nByteToWrite)));
 
         if(nByteWritten <0){
 

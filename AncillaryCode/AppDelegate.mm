@@ -112,7 +112,7 @@
 	_warningTimeAlertShown = NO;
 	_bgTimer = [NSTimer scheduledTimerWithTimeInterval:PROXY_BG_TIME_CHECK_SECS
 												target:self
-											  selector:@selector(checkBackgroundTimeRemaining:)
+											  selector:@selector(checkBackgroundTimeRemaining)
 											  userInfo:nil
 											   repeats:YES];
     __block UIBackgroundTaskIdentifier ident;
@@ -145,7 +145,7 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = (self.networkingCount > 0);
 }
 
-- (void)checkBackgroundTimeRemaining:(NSTimer *)timer
+- (void)checkBackgroundTimeRemaining
 {
 	// if no networking, then ignore the bg operations
 	if ([UIApplication sharedApplication].networkActivityIndicatorVisible == FALSE)
@@ -172,7 +172,7 @@
 	{
 		NSString *msg = NSLocalizedString(@"Your connection will be closed immediately", nil);
         
-        LOG_GENERAL(NSLOGGER_LEVEL_TRACE, msg);
+        LOG_GENERAL(NSLOGGER_LEVEL_TRACE, @"%@", msg);
 		
 		// build the UIAlert to be displayed
 		notif = [UILocalNotification new];

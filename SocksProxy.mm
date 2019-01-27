@@ -184,7 +184,7 @@
 }
 
 #pragma mark * Internal transfer code
-- (void)checkSendBuffer:(NSString*)streamName
+- (void)checkSendBuffer
 {
     if (self.sendbufferOffset==self.sendbufferLimit) {
         self.sendbufferOffset=0;
@@ -220,7 +220,7 @@
 	} else {
 		self.sendbufferOffset += bytesWritten;
 	}
-    [self checkSendBuffer: streamName];
+    [self checkSendBuffer];
 }
 - (void)readReceiveNetwork:(NSString*)streamName
 {
@@ -312,7 +312,7 @@
 -(uint)sendData:(uint8_t *)buf size:(uint)n
 {
 	if (n>kSendBufferSize-self.sendbufferLimit)
-		n = kSendBufferSize-self.sendbufferLimit;
+		n = uint(kSendBufferSize-self.sendbufferLimit);
 	if (n>0) {
 		memcpy(&(self.sendbuffer[self.sendbufferLimit]), buf, (size_t)n);
 		self.sendbufferLimit+=n;
@@ -328,7 +328,7 @@
 		uint8_t *s = self.receivebuffer + self.receivebufferOffset;
 		uint8_t *e = self.receivebuffer + self.receivebufferLimit;
 		
-		LOG_NETWORK_SOCKS(NSLOGGER_LEVEL_DEBUG, @"protocol %lu %d", (unsigned long)self.protocolLocation, e - s);
+        LOG_NETWORK_SOCKS(NSLOGGER_LEVEL_DEBUG, @"protocol %lu %ld", (unsigned long)self.protocolLocation, e - s);
 
 		// if the protocol did not advance then it is an indication that we dont
 		// have enough data in self.receivebuffer
@@ -492,7 +492,7 @@
 					[self stopSendReceiveWithStatus:@"Cant send reply 1"];
 					break;								
 				}
-				uint n=s-addrstart;
+				uint n= uint(s-addrstart);
 				if ([self sendData:addrstart size:n] != n) {
 					[self stopSendReceiveWithStatus:@"Cant send reply 2"];
 					break;								
