@@ -1,100 +1,18 @@
-This project is forked from https://code.google.com/p/iphone-socks-proxy/
+본 프로젝트는 rickyzhang82 님의 tethering 프로젝트를 포크해서 정리좀 했습니다.
+원본 : https://github.com/rickyzhang82/tethering
 
-The current goal is to make this iOS apps up-to-date and add new features.
+기존 아이폰 테더링의 경우
+    1. 아이폰에서 핫스팟을 켠다.
+    2. 맥에서 핫스팟에 연결한다.
 
-User guide documentation is written on https://github.com/rickyzhang82/tethering/wiki
+이 앱을 아이폰에 설치한 경우
+    1. 맥에 유선 인터넷이 연결되어 있어야 한다. (en1에 프록시 셋팅 때문에 필요. 이 망으로 인터넷을 사용하지 않는다.)
+    2. 맥의 WiFi 를 공유한다. (설정->공유->인터넷 공유 : 연결공유에 유선 네트웍 카드, 다음 사용에 WiFi 선택)
+    3. 아이폰에 본 앱을 실행하고 시작 버튼을 누른다.
+    4. 맥의 설정->네트워크->이더넷(유선)->고급->프록시->Socks 프록시 (아이폰 앱에 나와있는 IP와 포트를 적용)
 
-If you like this App, please visit UNICEF tap project website http://tap.unicefusa.org/ and make a donation to the kids who need clean water supply.
-
-Thanks for your support.
-
-Ricky
-
-Change log
-------------------------------------------------
-Release V1.7
-* Add unlimited background. Feel free to close screen to save battery. Thanks @bsuh for his patch.
-* Finally, we have a pull request to change ugly UI to a new modern look. Thanks @rickybloomfield for his patch.
-
-Release V1.6
-* Fix problem when remote network is faster than local network. Thanks @optimoid and @bsuh for their patch and bug report.
-* Refactor socks proxy message debug log.
-
-Release V1.5
-* Refactor DNS message log
-* Verify compatible with iOS 9.3
-
-Release V1.4
-* Support iPad tethering. Add http server to host socks.pac file
-* Fix several memory leak issues.
-
-Release V1.3
-* Update NSLogger API compatible with iOS 8
-
-Release V1.2
-* Convert xib to storyboard
-* Fix Failed to compile: ttdnsd_platform.h not found error
-
-Release V1.1
-* Fix retrieve wifi IP address bug.
-* Replace naive logging with NSLogger logging API
-* Enable ARC and use modern Objective-C literal
-
-Release v1.0.
-* Support DNS server and Socks5 proxy server.
-* Fix crash problem when wifi is not connected.
-* Listenning socket reuse address and port if previous TCP connection in TIME_WAIT state.
-
-------------------------------------------------
- #  SOCKS - SOCKS Proxy for iPhone
- #  Copyright (C) 2009 Ehud Ben-Reuven
- #  udi@benreuven.com
- #
- # This program is free software; you can redistribute it and/or
- # modify it under the terms of the GNU General Public License
- # as published by the Free Software Foundation version 2.
- #
- # This program is distributed in the hope that it will be useful,
- # but WITHOUT ANY WARRANTY; without even the implied warranty of
- # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- # GNU General Public License for more details.
- #
- # You should have received a copy of the GNU General Public License
- # along with this program; if not, write to the Free Software
- # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,USA.
+기존 테더링 방식으로 데이터를 사용할 경우 각 통신사의 테더링 용량 제한에 추적이 된다.
+이 앱을 사용할 경우 기존처럼 맥이 아이폰에 접속되는것이 아니라 아이폰에 맥의 WiFi에 접속되어
+데이터를 던져주기 때문에 테더링 추적이 불가능 할거라고 생각된다.
 
 
-This is an iPhone App that is a SOCS Proxy. It allows you to connect your laptop to the
-Internet through the iPhone's 3G/Edge connection (tethering.)
-If you want to install the application on your iPhone you will have to build and install
-the App from the the supplied code.
- * Pay Apple for iPhone development program
- * get a development certificat from Apple's developers portal
- * download the entire source code to a Mac
- * double click SOCKS.xcodeproj
- * in the left panel select Targers and then select SOCKS
- * press the "i" Info button on the top
- * select Properties tab
- * In the Identifier field change "symfi" to your company name
- * connect an iPhone using a cable
- * click Build and Debug
-
-
-In order for this to work you need to follow few steps
-Instructions for Mac:
- * On your laptop start an add-hoc Wi-Fi network:
-  * System Preferences->Network
-  * select AirPort
-  * click on Network Name and select Create Network
-  * in Name enter "mywifi", press OK, press Apply
- * Connect you iPhone to the add-hoc wifi network:
-  * Settings->Wi-Fi
-  * select "mywifi"
- * Run this SOCKS App on your iPhone
- * In the SOCS Proxy tab press Start
- * configure your laptop to use SOCKS:
-  * System Preferences->Network->Advanced...->Proxies
-  * select SOCKS proxy
-  * in the SOCKS Proxy Server field enter the address and port that appear on your iPhone screen
-  * press OK
-  * press Apply
